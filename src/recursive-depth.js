@@ -16,7 +16,21 @@ class DepthCalculator {
 
   calculateDepth(array) {
     
-    
+    let deep=1;
+    let number=1;
+    for(let i=0;i<array.length;i++)
+    {
+      if(Array.isArray(array[i]))
+      {
+        deep=1+this.calculateDepth(array[i]);
+      }
+    }
+    if(number>deep)
+    {
+      deep=number;
+    }
+    number=1;
+    return deep;
   }
 }
 const instance = new DepthCalculator();
