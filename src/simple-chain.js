@@ -5,28 +5,64 @@ const { NotImplementedError } = require('../extensions/index.js');
  * 
  */
 const chainMaker = {
+
+  arr:[],
   getLength() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    return this.arr.length;
   },
-  addLink(/* value */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  addLink(arg='( )') {
+    this.arr.push(arg);
+    return this;
+    
   },
-  removeLink(/* position */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  removeLink(arg) {
+    if(typeof(arg)!=='number')
+    {
+      this.arr=[];
+      throw new Error('You can\'t remove incorrect link!');
+    }
+    
+    arg=arg-1;
+    let flag=-1;
+    for(let i=0;i<this.arr.length;i++)
+    {
+      if(i===arg)
+      {
+        flag=i;
+        this.arr.splice(i,1);
+        break;
+      }
+    }
+    if(flag === -1){
+      this.arr=[];
+      throw new Error("You can't remove incorrect link!");
+    } 
+    return this;
   },
   reverseChain() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    this.arr.reverse();
+    return this;
   },
   finishChain() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+
+    let str='';
+    let chain="~~";
+    for(let i=0;i<this.arr.length;i++)
+    {
+      if(i===this.arr.length-1) 
+      {
+        str+= '( '+this.arr[i]+' )';
+        break;
+      }
+      str+= '( '+this.arr[i]+' )'+chain;
+    }
+    this.arr=[];
+    return str;
+   
   }
 };
 
+console.log(chainMaker.addLink('GHI').addLink(null).reverseChain().addLink(333).reverseChain().reverseChain().addLink(0).reverseChain().reverseChain().addLink('GHI').finishChain());
 module.exports = {
   chainMaker
 };
